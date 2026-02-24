@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light | Portfolio</title>
+    <link rel="icon" href="light.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d0d0d 100%);
+            color: #d1d1d1;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.6;
+            background-attachment: fixed;
+        }
+
+        .ascii-art {
+            line-height: 1.1;
+            letter-spacing: 0;
+            white-space: pre;
+            font-size: 6px;
+            color: #ffffff;
+            opacity: 0.9;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .ascii-art {
+                font-size: 8px;
+            }
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1), 0 0 20px rgba(0, 153, 255, 0.3);
+            background: linear-gradient(135deg, #0a0a0a 0%, #0a1a2e 100%);
+            animation: avatarGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1), 0 0 20px rgba(0, 153, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.2), 0 0 30px rgba(0, 153, 255, 0.5); }
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.1) contrast(1.3);
+        }
+
+        .terminal-link {
+            transition: all 0.2s;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .terminal-link:hover {
+            color: #0099ff;
+            text-shadow: 0 0 10px rgba(0, 153, 255, 0.8);
+            text-decoration: underline;
+        }
+
+        .nav-item {
+            color: #ffffff;
+            padding: 6px 10px;
+            border: 1px solid #444;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            border: 1px solid #0099ff;
+            background: #1a1a1a;
+            color: #0099ff;
+            box-shadow: 0 0 8px rgba(0, 153, 255, 0.6);
+            text-shadow: 0 0 6px rgba(0, 153, 255, 0.8);
+        }
+
+        .divider {
+            color: #333;
+            user-select: none;
+            text-shadow: 0 0 3px rgba(51, 51, 51, 0.5);
+        }
+
+        .content-card {
+            border: 1px solid #333;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0f1419 100%);
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            border-color: #ffffff;
+            background: linear-gradient(135deg, #0f0f0f 0%, #0a1a2e 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 153, 255, 0.4), 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status-dot {
+            height: 6px;
+            width: 6px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .status-active { background-color: #0099ff; box-shadow: 0 0 8px rgba(0, 153, 255, 0.8); }
+        .status-completed { background-color: #ffffff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
+        .status-winner { background-color: #0099ff; box-shadow: 0 0 8px rgba(0, 153, 255, 0.8); }
+
+        .ctf-header {
+            border-bottom: 1px dashed #444;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Terminal header styling */
+        header {
+            border-top: 2px solid #ffffff;
+            padding-top: 1rem;
+        }
+
+        /* Enhanced text styling */
+        .text-white {
+            color: #ffffff;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .text-zinc-500 {
+            color: #666;
+        }
+
+        .text-zinc-300 {
+            color: #aaa;
+        }
+
+        .text-zinc-400 {
+            color: #888;
+        }
+
+        footer {
+            border-top: 1px solid #ffffff;
+            color: #ffffff;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
+
+    <!-- Header Section (Persistent) -->
+    <section class="mb-8">
+        <p class="divider font-bold">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></p>
+        <p class="text-sm opacity-90 uppercase tracking-tighter" style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">Light | アニメ愛好家 | Web開発者 | テニスをするのが大好き</p>
+        <p class="divider font-bold">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></p>
+    </section>
+
+    <header class="mb-10">
+        <div class="flex items-start gap-4 mb-4">
+            <div class="avatar-container">
+                <!-- Clean light.png avatar with circular styling -->
+                <img src="light.png" alt="Light" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=Light'">
+            </div>
+            <div>
+                <p class="text-xs tracking-widest uppercase font-bold" style="color: #ffffff; text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);">┌─ Welcome ─┐</p>
+                <p class="text-white font-bold text-lg">こんにちは 👋 !! Light here</p>
+                <p class="text-zinc-500 text-sm">[Ξ] light.in</p>
+                <p class="text-zinc-500 text-sm">[◎] zaphyr.io</p>
+            </div>
+        </div>
+
+        <nav class="flex flex-wrap gap-6 text-sm mb-8">
+            <a href="https://github.com/PranavKumarprogrammer" target="_blank" class="terminal-link font-bold">&lt; Github /&gt;</a>
+            <a href="https://x.com/PranavKuma24199" target="_blank" class="terminal-link font-bold">&lt; Twitter /&gt;</a>
+            <a href="https://www.linkedin.com/in/light-yagami-96a497394/" target="_blank" class="terminal-link font-bold">&lt; LinkedIn /&gt;</a>
+        </nav>
+
+        <p class="divider font-bold mb-4">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></p>
+        
+        <div class="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-wider mb-8">
+            <div onclick="showPage('home')" id="nav-home" class="nav-item active">[Home]</div>
+            <div onclick="showPage('projects')" id="nav-projects" class="nav-item">[Projects]</div>
+            <div onclick="showPage('experience')" id="nav-experience" class="nav-item">[Experience]</div>
+            <div onclick="showPage('hackathons')" id="nav-hackathons" class="nav-item">[Hackathons]</div>
+            <div onclick="showPage('ctf')" id="nav-ctf" class="nav-item">[CTF]</div>
+        </div>
+    </header>
+
+    <!-- Home Content -->
+    <div id="page-home">
+        <main class="space-y-4 text-sm md:text-base mb-12">
+            <div class="flex items-start gap-2">
+                <span class="text-zinc-500">-</span>
+                <p>🔭 I'm a <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">16 year old</span> developer currently working on Web3 & Low Level Systems.</p>
+            </div>
+            <div class="flex items-start gap-2">
+                <span class="text-zinc-500">-</span>
+                <p>💬 Ask me about <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">CS, UI/UX Designer, and BLOCKCHAIN (Learning)</span>.</p>
+            </div>
+            <div class="flex items-start gap-2">
+                <span class="text-zinc-500">-</span>
+                <p>📧 How to reach me: <a href="mailto:lighthatari80@gmail.com" class="terminal-link underline">lighthatari80@gmail.com</a></p>
+            </div>
+            <div class="flex items-start gap-2">
+                <span class="text-zinc-500">-</span>
+                <p>🎨 Interests: I love <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">doodle art</span> and <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">playing tennis</span>.</p>
+            </div>
+        </main>
+
+        <section>
+            <p class="text-zinc-500 text-xs mb-4 italic">~~~~~~~~~~ おやおやおやおやおやおや !!!!</p>
+            <div class="overflow-x-auto">
+                <pre class="ascii-art">
+░░░░░░      ░░  ████████████████████████████████████████████████████████████████████████████████████████████████████████████
+              ░░  ██████████████████████████            ████████████████████████████████████████████░░░░▒▒██████████████████
+      ░░░░      ▓▓████████████████████░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████░░░░▒▒▒▒████████████████
+  ░░            ████████████████      ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████▒▒░░░░▒▒██████████████
+          ░░  ▓▓████████████▒▒    ▒▒▒▒░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████▒▒▓▓▒▒▒▒▒▒▒▒░░░░░░░░██████████████
+          ░░  ████████████      ▒▒░░░░░░▒▒▒▒▒▒░░░░░░▒▒▒▒▒▒▒▒░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▒▒░░░░░░░░            ████████████
+            ████████████      ▒▒░░    ░░▓▓░░░░      ░░▒▒▒▒▒▒▒▒░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████░░▒▒▒▒░░░░          ████████████
+        ░░  ██████████      ▒▒░░      ░░░░              ░░▒▒▒▒░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████░░░░        ████████████
+  ░░░░░░░░██████████      ▓▓          ░░                  ░░░░  ░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████░░▒▒░░▒▒████████████
+██  ██████████████      ▒▒                                ░░    ░░▓▓▓▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████▓▓░░▒▒▒▒████████████
+██▒▒████████████      ▒▒░░                                ░░    ░░▓▓▓▓▓▓▒▒▒▒▓▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████░░░░▒▒████████████
+████████████████      ▓▓                                        ░░▓▓▓▓▓▓▓▓▒▒▓▓▓▓▒▒▓▓▓▓▓▓▒▒▒▒▓▓▓▓▓▓██████████████████████████
+██████████████      ▓▓                                            ░░▓▓▓▓▓▓▓▓▒▒▓▓▒▒▒▒▓▓▓▓▓▓▒▒▒▒▓▓▓▓██████████████████████████
+████████████░░    ▒▒░░                                              ▓▓░░▓▓▓▓▒▒▒▒▒▒▒▒▒▒▓▓▓▓▒▒░░▒▒▓▓▓▓████████████████████████
+████████████    ▒▒▓▓                                                ▓▓  ▓▓▓▓▒▒▒▒▓▓▒▒▒▒▒▒▒▒▓▓▒▒░░▒▒▓▓████████████████████████
+████████████    ▒▒                                                  ▓▓▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▓▓░░░░░░▓▓▓▓██████████████████████
+██████████    ▒▒                            ▒▒                      ▓▓▒▒▒▒▓▓▒▒▓▓▓▓▒▒░░▒▒▒▒▒▒░░▒▒▓▓██████████████████████
+██████████    ▓▓                            ▓▓░░          ░░        ▓▓░░▒▒▒▒░░░░░░░░▒▒▒▒▒▒▒▒▒▒░░▓▓██████████████████████
+████████      ▓▓                            ░░▒▒░░▒▒      ▒▒        ▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▒▓▓██████▒▒▒▒████████████
+████████    ▓▓░░      ▓▓                    ░░▒▒░░▒▒      ▒▒░░        ░░▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▒▒▒▓▓████░░░░████████████
+██████      ▒▒░░      ▒▒            ░░      ░░▒▒░░▒▒      ▒▒░░        ▒▒▓▓▓▓▓▓▓▓▒▒▓▓▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▒▒▒▓▓████░░░░▓▓▓▓████████
+██████    ▓▓▒▒░░    ░░▓▓      ▓▓  ░░░░▓▓░░    ▒▒░░░░▒▒░░    ▓▓░░      ▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▒▒▒▒▒▓▓▓▓▒▒▒▒▒▒▒▒▓▓████▒▒░░▒▒▓▓████████
+██████    ▓▓▒▒░  ░░▒▒▓▓    ▒▒░░  ░░▒▒▒▒░░      ▒▒░░▒▒░░    ▓▓▒▒      ▓▓░░▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓▓▓▒▒▒▒▒▒▒▒▓▓████▒▒  ▒▒██████████
+██████  ▓▓  ▒▒░░  ░░▒▒      ▒▒    ░░▒▒▒▒░░░░    ▓▓░░░░▒▒░░  ░░▒▒░░  ▓▓░░░░▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▓▓██░░░░▒▒████████████
+██████      ▒▒░░░░▒▒▒▒    ░░▒▒  ░░▒▒▒▒░░▒▒░░    ▒▒▒▒░░▒▒▓▓▓▓▓▓▒▒▒▒  ░░░░░░▓▓▓▓▒▒▓▓▓▓▒▒▓▓▒▒▓▓▓▓▓▓▒▒▒▒▒▒▓▓██▓▓▓▓▓▓████████████
+██████      ▒▒░░░░▒▒      ▓▓▒▒  ▓▓░░░░░░▓▓░░░░    ▒▒░░▒▒░░░░████████░░░░▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▒▒▒▓▓▓▓▒▒▓▓▒▒▓▓████████████████████
+████        ▓▓░░░░▓▓    ░░▒▒▒▒░░▒▒░░░░░░░░▒▒░░░░  ▒▒▒▒▒▒▒▒░░░░▓▓████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▒▒▓▓▒▒▓▓████████████████████
+████    ██  ▒▒░░░░▓▓    ░░▓▓  ░░░░      ░░▓▓░░░░    ▒▒▒▒▒▒▒▒░░▒▒▒▒▒▒░░██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓████████████████████
+████    ██  ▒▒░░▒▒▒▒  ░░░░▓▓  ░░░░░░░░░░  ▒▒▓▓░░    ▒▒░░░░▒▒▒▒██████▒▒░░▒▒████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓████████████████████
+████  ████  ▒▒▓▓▒▒▓▓  ░░░░▒▒  ░░░░    ░░░░▒▒▒▒▒▒░░  ▒▒░░░░░░██████████▓▓▒▒▒▒████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████▒▒████
+████  ████    ▒▒▒▒▒▒░░░░▒▒░░  ░░░░    ░░░░▒▒▒▒░░▒▒░░░░▒▒  ░░██▓▓▓▓▓▓░░██▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████▒▒░░████
+██████████    ▓▓  ▒▒▒▒░░▒▒    ░░░░  ░░  ░░▓▓▒▒░░░░▓▓░░▒▒    ██  ██▒▒  ░░██▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████▒▒██████
+██████████    ▓▓  ▒▒▓▓░░▓▓  ░░░░░░    ░░░░▒▒▒▒░░░░░░▒▒▒▒    ██▒▒░░▒▒    ░░▒▒▓▓▓▓▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████▓▓██████
+██████████    ▓▓  ▒▒▒▒░░▓▓░░░░░░░░░░  ░░▒▒▒▒░░░░  ░░░░▒▒▒▒    ██▓▓        ▒▒▓▓▓▓░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████
+██████████      ▓▓  ▒▒░░▒▒░░░░  ░░░░░░░░▒▒▒▒░░░░    ░░░░░░      ████████  ░░▓▓░░    ░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████
+████████████        ▒▒▒▒▒▒░░▒▒    ░░░░░░▒▒▒▒░░            ░░                            ░░▓▓▓▓▓▓▓▓▓▓████████████████████████
+████████████    ██  ▒▒▒▒▒▒░░▒▒░░    ░░░░▒▒░░░░                                          ░░░░▓▓▓▓▓▓██▓▓██████████████████████
+██████████████  ██  ▒▒▒▒▓▓░░▒▒░░    ▓▓░░▒▒░░░░                                      ░░░░▓▓▓▓▓▓██▓▓██████████████████████████
+██████████████  ██    ▓▓  ▒▒░░▒▒    ▒▒░░▒▒░░░░                                    ░░░░▓▓▓▓▓▓▓▓██████████████████████████████
+██████████████▒▒██    ▒▒  ▒▒▒▒░░    ▒▒░░▒▒░░░░░░                                  ░░░░▓▓▓▓▓▓████████████████████████████████
+██████████████████      ▒▒  ▓▓░░▒▒    ▒▒▒▒██░░░░                    ░░░░░░        ░░▓▓▓▓██▓▓██  ████████████████████████████
+████████████████████        ▒▒▒▒▒▒░░  ▒▒▒▒████░░░░                          ░░  ░░▓▓▓▓▓▓██  ██    ████████████████████  ████
+██████████  ████  ▓▓  ▓▓░░▒▒▒▒████████░░░░░░              ░░░░    ░░▓▓▓▓████████  ██████  ██      ██████████  ██
+░░        ░░██████████  ████      ▓▓░░▒▒░░░░██████▓▓▓▓░░░░              ░░    ░░▓▓▓▓██████████████  ████▓▓▓▓  ██      ██  ░░
+░░          ████████████████  ████  ▓▓▒▒░░░░░░░░████████░░░░                ░░▓▓▓▓████████████    ██████      ██████████  ██
+░░      ░░  ██████████████████████    ▒▒░░░░░░░░░░  ░░██▓▓░░░░░░        ░░░░▓▓██▓▓██████        ██████████▓▓  ██████████  ██
+    ░░░░  ░░  ████████████████          ░░░░░░░░░░      ░░░░░░░░░░░░    ░░▓▓██████████████████████░░████      ██████████  ██
+        ░░    ████████████        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░          ░░░░░░░░░░░░▒▒▓▓██████████████████▒▒▒▒▒▒▒▒████▓▓▓▓██████████▓▓██
+      ░░      ████████░░░░  ▒▒▒▒▒▒████▓▓▓▓▓▓▓▓▓▓▓▓▒▒        ░░░░▒▒▒▒▒▒▒▒▓▓▓▓██████████████████▓▓▓▓░░▒▒▒▒████████████████████
+      ░░    ▓▓██████      ▓▓░░░░██▓▓▓▓░░░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓    ░░██▓▓▓▓████▓▓██████████████████████▓▓░░░░▒▒██████████████████
+  ░░      ▒▒██████▒▒    ▒▒▒▒░░▒▒▓▓▓▓▒▒░░░░░░░░▒▒▓▓▓▓██▒▒▒▒▒▒▒▒░░██████████▓▓██████████████████▒▒▒▒▒▒    ░░██████████████████
+▓▓      ▓▓██████      ▓▓██░░░░▓▓▓▓▓▓░░░░    ░░▓▓▓▓▓▓██░░░░░░░░▓▓██▓▓▓▓▓▓▓▓████████████████████▒▒░░    ░░▒▒██████████████████
+██████████████      ▓▓░░░░░░▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓░░░░░░██▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓████████████████▓▓░░▓▓▓▓▓▓████████████████████
+████████████        ██░░░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░████▒▒░░▒▒▒▒▒▒██▓▓▓▓▓▓██████████████████▓▓██████████████████████████
+████████████      ▓▓░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░▓▓████░░░░░░░░░░██▓▓▓▓██████████████████████████████████████████████
+██████████      ████░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██░░░░░░░░░░▒▒▒▒██░░░░░░░░░░██▓▓▒▒████████████████████████████████████████████
+██████████      ██░░░░░░████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████░░░░░░░░░░░░▒▒██▓▓▓▓░░░░░░░░▓▓▓▓▓▓██████████████████████████████████████████
+████████      ██░░░░░░░░████████████████▓▓▓▓██░░░░░░░░░░░░░░▒▒▒▒▒▒████░░░░░░░░██▓▓████████████████████████████████████████</pre>
+            </div>
+        </section>
+    </div>
+
+    <!-- Projects Content -->
+    <div id="page-projects" class="hidden">
+        <section class="mb-8">
+            <h2 class="text-white font-bold text-xl mb-4 italic" style="color: #ffffff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);">&lt; Current_Deployments /&gt;</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <a href="https://github.com/PranavKumarprogrammer/armflux" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Armflux</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">CYBERSECURITY</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Trust OS framework for verifying data integrity and execution environments.</p>
+                </a>
+
+                <a href="https://github.com/PranavKumarprogrammer/cosmic.ai" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Cosmic AI (v1.0)</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">LLM / CHAT</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Intelligent chat assistant. Released: 09 Aug 2025. Evolution path: Active.</p>
+                </a>
+
+                <a href="https://github.com/PranavKumarprogrammer/Velox-Ai" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Velox AI</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">PERFORMANCE</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Next-gen AI platform focused on speed, precision, and futuristic minimal interfaces.</p>
+                </a>
+
+                <a href="https://github.com/PranavKumarprogrammer/Cosmic-Ai-3.0-Singularity" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Cosmic 3.0 | Singularity</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">CORE ARCH</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Unified intelligence core designed for scale. Where performance and real-world usage converge.</p>
+                </a>
+
+            </div>
+            <div class="mt-8">
+                <p onclick="showPage('home')" class="terminal-link cursor-pointer text-xs underline">&lt;-- Return to Root</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Experience Content -->
+    <div id="page-experience" class="hidden">
+        <section class="mb-8">
+            <h2 class="text-white font-bold text-xl mb-6 italic" style="color: #ffffff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);">&lt; Career_History /&gt;</h2>
+            
+            <div class="content-card p-5 mb-6 border-l-4 border-l-white">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+                    <div>
+                        <h3 class="text-white font-bold text-lg underline decoration-zinc-700" style="color: #ffffff;">ARMFLUX</h3>
+                        <p class="text-xs text-zinc-500">Founder & CEO | armflux.com</p>
+                    </div>
+                    <div class="text-[10px] text-zinc-400 mt-2 md:mt-0 uppercase tracking-widest bg-zinc-900 px-2 py-1">
+                        <span class="status-dot status-active animate-pulse"></span> Present [In Stealth]
+                    </div>
+                </div>
+                <p class="text-sm text-zinc-300">Launching the <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">biggest startup</span> in the ecosystem. Building the Trust OS for the AI Era. Focusing on secure, verifiable execution environments for the next generation of intelligence.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://www.kinetichost.space/" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Kinetic Host</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">COO</span>
+                    </div>
+                    <p class="text-[10px] text-zinc-600 mb-2 italic">Since 8 Months</p>
+                    <p class="text-xs text-zinc-400">Driving operations and strategic growth at scale for high-performance cloud infrastructure.</p>
+                </a>
+
+                <a href="https://discord.gg/9tescYgsN9" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Game Hosting</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">FOUNDER</span>
+                    </div>
+                    <p class="text-[10px] text-zinc-600 mb-2 italic">Current Top Provider</p>
+                    <p class="text-xs text-zinc-400">Leading a top-tier provider for Game & CS2 servers, including specialized high-performance VPS solutions.</p>
+                </a>
+
+                <a href="https://jartexnetwork.com/" target="_blank" class="content-card p-4 block">
+                    <div class="flex justify-between items-start mb-2">
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">JartexNetwork</span>
+                        <span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5">LEAD DEV</span>
+                    </div>
+                    <p class="text-[10px] text-zinc-600 mb-2 italic">5 Months Exchange</p>
+                    <p class="text-xs text-zinc-400">Led core development cycles and system architecture during a high-impact exchange period.</p>
+                </a>
+            </div>
+
+            <div class="mt-8">
+                <p onclick="showPage('home')" class="terminal-link cursor-pointer text-xs underline">&lt;-- Return to Root</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Hackathons Content -->
+    <div id="page-hackathons" class="hidden">
+        <section class="mb-8">
+            <h2 class="text-white font-bold text-xl mb-6 italic" style="color: #ffffff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);">&lt; Competitive_Coding /&gt;</h2>
+            
+            <!-- NASA Space Apps -->
+            <div class="content-card p-6 mb-6 border-t-2 border-t-amber-500 shadow-lg shadow-amber-900/10">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                    <div>
+                        <p class="text-[10px] text-amber-500 font-bold tracking-widest uppercase mb-1">NASA Space Apps Challenge 2025</p>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="status-dot status-winner"></span>
+                            <h3 class="text-white font-bold text-xl uppercase" style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">2nd / 140 [Global]</h3>
+                        </div>
+                        <p class="text-xs text-zinc-400">Team: <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">Cosmic Developers</span></p>
+                    </div>
+                    <div class="text-[10px] text-zinc-500 mt-2 md:mt-0 bg-zinc-900 px-3 py-1 border border-zinc-800 rounded font-bold">
+                        PROJECT: CITYSENSE
+                    </div>
+                </div>
+                
+                <p class="text-sm text-zinc-300 mb-4">
+                    Developed <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">CitySense</span>, an advanced environmental monitoring platform that delivers comprehensive insights across thermal zones, flood risks, and air quality. We empower communities with intelligent forecasting and early warning systems.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-zinc-900/50 p-3 border border-zinc-800 rounded">
+                        <p class="text-[10px] text-zinc-500 uppercase mb-1">Real-time Data</p>
+                        <p class="text-xs text-zinc-300 italic">WeatherAPI Integration</p>
+                    </div>
+                    <div class="bg-zinc-900/50 p-3 border border-zinc-800 rounded">
+                        <p class="text-[10px] text-zinc-500 uppercase mb-1">AI Analytics</p>
+                        <p class="text-xs text-zinc-300 italic">Mistral AI Core</p>
+                    </div>
+                    <div class="bg-zinc-900/50 p-3 border border-zinc-800 rounded">
+                        <p class="text-[10px] text-zinc-500 uppercase mb-1">Frontend</p>
+                        <p class="text-xs text-zinc-300 italic">Interactive React Dashboards</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <span class="text-[9px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded border border-zinc-700">#EnvironmentalIntelligence</span>
+                    <span class="text-[9px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded border border-zinc-700">#SmartCities</span>
+                    <span class="text-[9px] bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded border border-zinc-700">#NASA</span>
+                </div>
+            </div>
+
+            <!-- Global Hack Week -->
+            <div class="content-card p-4 border-l-2 border-l-blue-500">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-white font-bold" style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">Global Hack Week: Data Week</h3>
+                    <span class="text-[10px] text-blue-500 font-bold">MLH PARTICIPANT</span>
+                </div>
+                <p class="text-xs text-zinc-400">Engaged in intensive Machine Learning and Data Science sprints. Explored advanced data visualization techniques and predictive modeling during the MLH seasonal circuit.</p>
+            </div>
+
+            <div class="mt-8">
+                <p onclick="showPage('home')" class="terminal-link cursor-pointer text-xs underline">&lt;-- Return to Root</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- CTF Content -->
+    <div id="page-ctf" class="hidden">
+        <section class="mb-8">
+            <h2 class="text-white font-bold text-xl mb-6 italic" style="color: #ffffff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);">&lt; Capture_The_Flag /&gt;</h2>
+            
+            <div class="content-card p-6 border-l-4 border-l-emerald-500 bg-zinc-900/30">
+                <div class="ctf-header">
+                    <h3 class="text-white font-bold text-lg" style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);">NSAC 2025</h3>
+                    <p class="text-xs text-zinc-500">Problem Solve</p>
+                </div>
+                
+                <div class="space-y-4 py-4">
+                    <div class="flex justify-between items-center bg-zinc-900 p-3 rounded border border-zinc-800">
+                        <span class="text-xs text-zinc-400 uppercase tracking-widest">Team Name</span>
+                        <span style="color: #ffffff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);" class="font-bold">Cosmic Developers</span>
+                    </div>
+                    
+                    <div class="flex flex-col gap-1 items-center justify-center p-6 border-2 border-dashed border-zinc-800 rounded">
+                        <p class="text-4xl font-bold text-white tracking-tighter" style="color: #ffffff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);">2rd <span class="text-xl text-zinc-500 font-normal">/ 140</span></p>
+                        <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-[0.2em] mt-2">Final Leaderboard Standing</p>
+                    </div>
+                </div>
+
+                <div class="text-[10px] text-zinc-500 italic mt-2">
+                    Focus: 
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <p onclick="showPage('home')" class="terminal-link cursor-pointer text-xs underline">&lt;-- Return to Root</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="mt-20 border-t border-zinc-800 pt-4 flex justify-between items-center text-zinc-600 text-[10px] uppercase tracking-widest">
+        <span>[ Terminal v1.3.0 ]</span>
+        <span>Built with <span class="text-zinc-500">Silence</span> &copy; 2026</span>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-projects').classList.add('hidden');
+            document.getElementById('page-experience').classList.add('hidden');
+            document.getElementById('page-hackathons').classList.add('hidden');
+            document.getElementById('page-ctf').classList.add('hidden');
+            
+            // Remove active class from nav
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            // Show selected page
+            const page = document.getElementById('page-' + pageId);
+            const nav = document.getElementById('nav-' + pageId);
+            
+            if(page) page.classList.remove('hidden');
+            if(nav) nav.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
